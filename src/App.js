@@ -1,17 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Dado } from './components/Dado';
 
 function App() {
+  const [ativo, setAtivo] = useState(true);
+  const [pontuacaoP1, setPontuacaoP1] = useState(0);
+  const [pontuacaoP2, setPontuacaoP2] = useState(0);
   const [jogadaP1, setJogadaP1] = useState(1);
   const [jogadaP2, setJogadaP2] = useState(1);
-  const [vez, setVez] = useState('P1');
 
+  useEffect(() => {
+    if (ativo) {
+      if (jogadaP1 > jogadaP2) {
+        setPontuacaoP1(pontuacaoP1+1);
+      };
 
-  function geraNumero() {
-    setVez(vez === 'P1' ? 'P2' : 'P1')
-    return (Math.random() * 5 + 1).toFixed(0);
-  };
+      if (jogadaP2 > jogadaP1) {
+        setPontuacaoP2(pontuacaoP2+1);
+      }
+    }
+  }, [jogadaP2]);
+
+  function toggleAtivo() {
+    setAtivo(!ativo);
+  }
 
   return (
     <div className="App">
@@ -20,15 +32,13 @@ function App() {
 
         <div className="arena">
           <div className="player-container">
-            <img className='dado-image' src={`/images/dado${jogadaP1}.png`} alt={`dado de numeração ${jogadaP1}`} />
-            <p>última jogada: {jogadaP1}</p>
-            <button className='button' disabled={vez === 'P2'} type='button' onClick={() => setJogadaP1(geraNumero())}>Jogar (P1)</button>
+            <p>Pontuação Player 1: {pontuacaoP1}</p>
+            <Dado ativo={!ativo} toggleAtivo={toggleAtivo} setJogada={setJogadaP1} jogada={jogadaP1} />
           </div>
 
           <div className="player-container">
-            <img className='dado-image' src={`/images/dado${jogadaP2}.png`} alt={`dado de numeração ${jogadaP2}`} />
-            <p>última jogada: {jogadaP2}</p>
-            <button className='button' disabled={vez === 'P1'} type='button' onClick={() => setJogadaP2(geraNumero())}>Jogar (P2)</button>
+            <p>Pontuação Player 2: {pontuacaoP2}</p>
+            <Dado ativo={ativo} toggleAtivo={toggleAtivo} setJogada={setJogadaP2} jogada={jogadaP2} />
           </div>
         </div>
       </header>
