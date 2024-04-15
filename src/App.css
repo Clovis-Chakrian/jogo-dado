@@ -35,6 +35,7 @@
   cursor: pointer;
   box-shadow: 3px 6px 5px 0px rgba(0, 0, 0, 0.75);
   transition: 300ms;
+  margin-bottom: 15px;
 }
 
 .button:active {
@@ -64,4 +65,12 @@
   width: 350px;
   height: 350px;
   border-radius: 20px;
+}
+
+.btnJogarNovamente {
+  background-color: #109010;
+}
+
+.btnJogarNovamente:disabled {
+  background-color: #109010;
 }
